@@ -1,0 +1,17 @@
+---
+
+-   name: Check for Symfony
+    stat: 'path=/usr/local/bin/symfony'
+    register: symfony_bin
+
+# Using curl because get_url causes an SSL error
+-   name: Download Symfony Installer
+    command: curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
+    when: not symfony_bin.stat.exists
+
+-   name: Make Symfony Installer executable
+    file:
+        path: /usr/local/bin/symfony
+        owner: root
+        group: root
+        mode: '0555'

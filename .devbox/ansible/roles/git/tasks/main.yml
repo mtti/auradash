@@ -1,0 +1,4 @@
+---
+# tasks file for git
+-   name: Git should be installed
+    apt: pkg=git state=installed

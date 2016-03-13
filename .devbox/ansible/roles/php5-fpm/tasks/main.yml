@@ -1,0 +1,16 @@
+---
+# tasks file for php5
+-   name: Install PHP5 packages
+    apt: 'pkg={{item}} state=installed'
+    with_items:
+        - php5-fpm
+
+-   name: Custom php.ini
+    template: src=php.ini.jinja2 dest=/etc/php5/fpm/php.ini
+    notify: restart php5-fpm
+
+-   name: Remove default pool
+    file:
+      path: /etc/php5/fpm/pool.d/www.conf
+      state: absent
+    notify: restart php5-fpm

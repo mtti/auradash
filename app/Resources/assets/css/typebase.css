@@ -1,0 +1,93 @@
+/*! Typebase.less v0.1.0 | MIT License */
+/* Setup */
+html {
+  /* Change default typefaces here */
+  font-family: serif;
+  font-size: 137.5%;
+  -webkit-font-smoothing: antialiased;
+}
+/* Copy & Lists */
+.tb p {
+  line-height: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+.tb ul,
+.tb ol {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.tb ul li,
+.tb ol li {
+  line-height: 1.5rem;
+}
+.tb ul ul,
+.tb ol ul,
+.tb ul ol,
+.tb ol ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.tb blockquote {
+  line-height: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+/* Headings */
+.tb h1,
+.tb h2,
+.tb h3,
+.tb h4,
+.tb h5,
+.tb h6 {
+  /* Change heading typefaces here */
+  font-family: sans-serif;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  line-height: 1.5rem;
+}
+.tb h1 {
+  font-size: 4.242rem;
+  line-height: 4.5rem;
+  margin-top: 3rem;
+}
+.tb h2 {
+  font-size: 2.828rem;
+  line-height: 3rem;
+  margin-top: 3rem;
+}
+.tb h3 {
+  font-size: 1.414rem;
+}
+.tb h4 {
+  font-size: 0.707rem;
+}
+.tb h5 {
+  font-size: 0.4713333333333333rem;
+}
+.tb h6 {
+  font-size: 0.3535rem;
+}
+/* Tables */
+.tb table {
+  margin-top: 1.5rem;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+t.tb able td,
+.tb table th {
+  padding: 0;
+  line-height: 33px;
+}
+/* Code blocks */
+.tb code {
+  vertical-align: bottom;
+}
+/* Leading paragraph text */
+.tb .lead {
+  font-size: 1.414rem;
+}
+/* Hug the block above you */
+.tb .hug {
+  margin-top: 0;
+}

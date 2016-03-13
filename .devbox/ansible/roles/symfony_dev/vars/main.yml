@@ -1,0 +1,13 @@
+---
+
+# app  bin  composer.json  composer.lock  phpunit.xml.dist  README.md  src  tests  var  vendor  web
+
+symfony_project_files:
+    - app
+    - bin
+    - composer.json
+    - composer.lock
+    - src
+    - tests
+    - var
+

@@ -1,0 +1,10 @@
+---
+# handlers file for varnish
+-   name: restart varnish
+    service: name=varnish state=restarted
+
+-   name: reload varnish
+    service: name=varnish state=reloaded
+
+-   name: clear varnish
+    command: varnishadm "ban.url ."

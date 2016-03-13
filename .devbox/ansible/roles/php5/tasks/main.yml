@@ -1,0 +1,13 @@
+---
+# tasks file for php5
+-   name: Install PHP5 packages
+    apt: 'pkg={{item}} state=installed'
+    with_items:
+        - php5-cli
+        - php5-curl
+        - php5-mysql
+        - php5-gd
+        - php5-intl
+
+-   name: Custom CLI php.ini
+    template: src=cli_php.ini.jinja2 dest=/etc/php5/cli/php.ini

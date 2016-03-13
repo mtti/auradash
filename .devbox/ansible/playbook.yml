@@ -1,0 +1,12 @@
+---
+
+-   name: Provision
+    hosts: targets
+    become: true
+    roles:
+        - symfony_dev
+    vars:
+        mysql_root_password: password
+        database_name: devbox
+        database_user: devbox
+        database_password: password

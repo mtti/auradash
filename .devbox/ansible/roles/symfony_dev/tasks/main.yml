@@ -1,0 +1,107 @@
+---
+
+-   name: Create database
+    mysql_db:
+        name: '{{database_name}}'
+        state: present
+        login_user: root
+        login_password: '{{mysql_root_password}}'
+
+-   name: Create local database user
+    mysql_user:
+        name: '{{database_user}}'
+        password: '{{database_password}}'
+        priv: '{{database_name}}.*:ALL'
+        state: present
+        login_user: root
+        login_password: '{{mysql_root_password}}'
+
+-   name: Copy unison supervisor configuration
+    copy:
+        src: devbox-unison.conf
+        dest: '/etc/supervisor/conf.d/devbox-unison.conf'
+    register: unison_supervisor_cfg
+
+-   name: Copy gulp watch supervisor configuration
+    copy:
+        src: devbox-watch.conf
+        dest: '/etc/supervisor/conf.d/devbox-watch.conf'
+    register: watch_supervisor_cfg
+
+-   name: Restart supervisor
+    service: name=supervisor state=restarted
+    when: unison_supervisor_cfg.changed or watch_supervisor_cfg.changed
+
+-   name: Check for composer.json
+    stat: 'path=/vagrant/composer.json'
+    register: composer_json
+
+-   name: Stop unison
+    supervisorctl:
+        name: devbox-unison
+        state: stopped
+
+-   name: Stop gulp watch
+    supervisorctl:
+        name: devbox-watch
+        state: stopped
+
+-   name: Create Symfony project
+    command: "/usr/local/bin/symfony new project chdir=/home/vagrant"
+    become_user: vagrant
+    when: not composer_json.stat.exists
+
+-   name: Copy React template
+    synchronize:
+        src: react-template/
+        dest: /vagrant
+        rsync_opts: [ "--ignore-existing" ]
+
+-   name: Copy files from /vagrant so they don't get deleted by unison
+    command: '/usr/bin/rsync --recursive --ignore-existing --exclude "/.*" --exclude "/.*/" --exclude "/vm" /vagrant/ /home/vagrant/project'
+    become_user: vagrant
+
+-   name: Install Composer dependecies
+    composer:
+        command: install
+        working_dir: "/home/vagrant/project"
+        no_dev: no
+    become_user: vagrant
+    when: composer_json.stat.exists
+
+-   name: Check for package.json
+    stat: "path=/vagrant/package.json"
+    register: package_json
+
+-   name: Install NPM dependencies
+    command: 'npm install chdir=/home/vagrant/project'
+    become_user: vagrant
+    when: package_json.stat.exists
+
+-   name: Copy created project files
+    command: '/usr/bin/rsync --recursive --ignore-existing --exclude node_modules --exclude build --exclude vendor --exclude var/cache/dev --exclude web/bundles /home/vagrant/project/ /vagrant'
+    when: not composer_json.stat.exists
+    become_user: vagrant
+
+-   name: Custom nginx configuration
+    template: src=templates/default.nginx.jinja2 dest=/etc/nginx/sites-available/default
+    notify: reload nginx
+
+-   name: Custom PHP-FPM pool
+    template: src=templates/php-fpm-pool.conf.jinja2 dest=/etc/php5/fpm/pool.d/devbox.conf
+    notify: restart php5-fpm
+
+-   name: Start unison
+    supervisorctl:
+        name: devbox-unison
+        state: started
+
+-   name: Check for gulp
+    stat: "path=/home/vagrant/project/node_modules/.bin/gulp"
+    register: gulp_bin
+
+-   name: Start gulp watch
+    supervisorctl:
+        name: devbox-watch
+        state: started
+    when: gulp_bin.stat.exists

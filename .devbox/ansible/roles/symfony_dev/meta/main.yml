@@ -1,0 +1,10 @@
+---
+dependencies:
+    - unison
+    - mysql
+    - supervisor
+    - node
+    - nginx
+    - composer
+    - symfony_installer
+    - php5-fpm

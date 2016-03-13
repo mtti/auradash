@@ -1,0 +1,26 @@
+---
+# tasks file for varnish
+
+-   name: HTTPS transport for APT should be installed
+    apt: pkg=apt-transport-https state=installed
+
+
+-   name: Varnish GPG key should be present
+    apt_key:
+        data: "{{ lookup('file', 'varnish.gpg.key') }}"
+        state: present
+
+
+-   name: Varnish APT repository should be present
+    apt_repository:
+        repo: deb https://repo.varnish-cache.org/ubuntu/ trusty varnish-3.0
+        state: present
+
+
+-   name: Varnish should be installed
+    apt: pkg=varnish state=installed update_cache=yes
+
+
+-   name: Allow connections from private networks
+    ufw: 'rule=allow src={{item}} port=6081 proto=tcp'
+    with_items: "{{private_networks}}"

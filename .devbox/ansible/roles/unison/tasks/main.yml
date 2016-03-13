@@ -1,0 +1,5 @@
+---
+# tasks file for unison
+
+-   name: Install unison
+    apt: pkg=unison state=installed

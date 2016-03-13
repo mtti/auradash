@@ -1,0 +1,16 @@
+---
+# tasks file for nginx
+
+-   name: "Number of worker processes defaults to number of cores"
+    set_fact:
+        nginx_worker_processes: '{{ansible_processor_cores}}'
+    when: nginx_worker_processes == 0
+
+-   name: nginx should be installed
+    apt: pkg=nginx state=installed
+
+-   name: Generate nginx configuration
+    template:
+        src: nginx.conf.j2
+        dest: '/etc/nginx/nginx.conf'
+    notify: reload nginx

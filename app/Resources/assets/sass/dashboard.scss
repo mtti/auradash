@@ -1,0 +1,33 @@
+
+html {
+  background-color: #111;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+.tile {
+  margin: 5px;
+  float:left;
+  padding: 10px;
+}
+
+.tile-white {
+  background-color: #EEE;
+  color: #111;
+}
+
+.tile-red {
+  background-color: #F00;
+  color: #EEE;
+}
+
+#dashboard {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+}

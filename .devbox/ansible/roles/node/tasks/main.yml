@@ -1,0 +1,22 @@
+---
+
+-   name: Install HTTPS transport for APT
+    apt: pkg=apt-transport-https state=installed
+
+-   name: Import NodeSource GPG key
+    apt_key:
+        data: "{{ lookup('file', 'nodesource.gpg.key') }}"
+        state: present
+
+-   name: Add NodeSource APT repository
+    apt_repository:
+        repo: deb https://deb.nodesource.com/node_4.x trusty main
+        state: present
+
+-   name: Add NodeSource APT source repository
+    apt_repository:
+        repo: deb-src https://deb.nodesource.com/node_4.x trusty main
+        state: present
+
+-   name: Install Node.js
+    apt: pkg=nodejs state=installed update_cache=yes
