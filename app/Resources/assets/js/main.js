@@ -1,9 +1,20 @@
 
 var $ = require('jquery');
-var Container = require('./container.js');
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var Dashboard = require('./components/dashboard/Dashboard.jsx');
+var DashboardContainer = require('./components/dashboard/DashboardContainer.jsx');
+//var Container = require('./container.js');
+
+ReactDOM.render(
+  <Dashboard />,
+  document.getElementById('dashboard')
+);
 
 $(document).ready(function() {
 
+  /*
   var root = new Container();
   root.width = 5;
   root.height = 3;
@@ -17,16 +28,30 @@ $(document).ready(function() {
   child = new Container();
   child.width = 1;
   child.height = 1;
-  child.cssClasses = 'tile-red';
   root.addChild(child);
+
+  var tile = new Container();
+  tile.width = 2;
+  tile.height = 1;
+  tile.cssClasses = 'test-tile';
+  child.addChild(tile);
+
+  tile = new Container();
+  tile.width = 1;
+  tile.height = 1;
+  tile.cssClasses = 'test-tile-2';
+  child.addChild(tile);
 
   var options = {
     tileWidth: window.innerWidth / 5.0,
     tileHeight: window.innerWidth / 5.0
   };
-  
+
   $('#dashboard').append(root.render(options));
 
+  $('.test-tile').html('<div class="tile tile-red">hello</div>');
+  $('.test-tile-2').html('<div class="tile tile-white">world</div>');
+  */
 
   /*
   var tileWidth = window.innerWidth / 5.0;

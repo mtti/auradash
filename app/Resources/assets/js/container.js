@@ -13,6 +13,7 @@ var Container = function() {
   this.parent = null;
   this.children = [];
   this.cssClasses = null;
+  this.path = 'root';
 
 }
 
@@ -67,6 +68,7 @@ Container.prototype.addChild = function(child) {
 
   child.parent = this;
   child.offset = offset;
+  child.path = this.path + '-' + this.children.length;
 
   this.children.push(child);
 }
@@ -76,7 +78,7 @@ Container.prototype.render = function(options) {
   if (!options) options = {};
   if (!options.tileHeight) options.tileHeight = 300;
   if (!options.tileWidth) options.tileWidth = 300;
-  
+
   function getRandColor(brightness){
     //6 levels of brightness from 0 to 5, 0 being the darkest
     var rgb = [Math.random() * 256, Math.random() * 256, Math.random() * 256];
@@ -91,6 +93,7 @@ Container.prototype.render = function(options) {
   
   var pos = this.getPosition(options);
 
+  elem.attr('id', 'dashboard-' + this.path);
   elem.css('position', 'absolute');
   elem.css('top', pos.top);
   elem.css('left', pos.left);
@@ -102,10 +105,16 @@ Container.prototype.render = function(options) {
     elem.addClass(this.cssClasses);
   }
 
-  for (var i=0; i<this.children.length; i++) {
-    elem.append(this.children[i].render(options));
+  if (this.children.length == 0) {
+    elem.addClass('dashboard-leaf');
   }
-
+  else {
+    elem.addClass('dashboard-branch');
+    for (var i=0; i<this.children.length; i++) {
+      elem.append(this.children[i].render(options));
+    }
+  }
+  
   return elem;
 
 }
