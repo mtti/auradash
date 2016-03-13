@@ -1,6 +1,6 @@
 {
-    "name": "vagrant/project",
-    "license": "proprietary",
+    "name": "auradash",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
