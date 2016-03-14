@@ -1,6 +1,6 @@
 
 html {
-  background-color: #111;
+  background-color: #222;
   font-family: Helvetica, Arial, sans-serif;
   color: #EEE;
 }
@@ -9,21 +9,25 @@ body {
   overflow: hidden;
 }
 
-.tile {
+.widget {
   width: 100%;
   height: 100%;
   padding: 5px;
   box-sizing: border-box;
-
 }
 
-.tile-white {
+.widget-white {
   background-color: #EEE;
   color: #111;
 }
 
-.tile-red {
+.widget-red {
   background-color: #F00;
+  color: #EEE;
+}
+
+.widget-black {
+  background-color: #111;
   color: #EEE;
 }
 
@@ -38,4 +42,10 @@ body {
   position: relative;
   width: 1920px;
   height: 1080px;
+  font-size: 0.5em;
+}
+
+.widget-clock svg text {
+  fill: currentColor;
+  dominant-baseline: middle;
 }

@@ -12,6 +12,11 @@ var DashboardContainer = React.createClass({
 
     var createChild = function(item, i) {
 
+      if (!item.direction) item.direction = 'horizontal';
+      if (!item.children) item.children = [];
+      if (!item.width) item.width = 0;
+      if (!item.height) item.height = 0;
+
       var tree = self.props.tree + '-' + i;
       item.offset = { x:offset.x, y:offset.y };
 
@@ -40,9 +45,24 @@ var DashboardContainer = React.createClass({
     };
 
     if (this.props.layout.children.length == 0) {
-      styles.backgroundColor = '#F00';
-      styles.padding = '5px 0 0 5px';
+      styles.padding = '10px 0 0 10px';
       styles.boxSizing = 'border-box';
+
+      if (this.props.layout.widget) {
+        return (
+          <div style={styles}>
+            <this.props.layout.widget />
+          </div>
+        );
+      }
+      else {
+        return (
+          <div style={styles}>
+            <div className="widget widget-black"></div>
+          </div>
+        );
+      }
+
     }
 
     return (
